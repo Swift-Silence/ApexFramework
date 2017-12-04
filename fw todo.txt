@@ -1,0 +1,87 @@
+* Update and add all comments in PHPDoc format.
+
+src\ApexDevelopment\Core\Controller.php
+    * Fix function v() to return false if name isnt set and value is null.
+    + Add _() function so that we can load templates using it
+    + Add function interlink(array [$controller, $method]) to link internally with ease
+    + Add function sendURI() so that the controller can use it.
+    + Add property $URI to hold the URI.
+    + Add function __toString() to spit out the URL when the class is echoed.
+    + Add property $PluginManager to hold the plugin manager object.
+    + Instantiate PluginManager class in constructor.
+    + Add property $Flash to hold the flash object.
+    + Instantiate Flash class in constructor.
+
+config\paths.php
+    + Add TEMPLATES constant to paths.php
+    + Add PLUGINS constant to paths.php
+
+src\ApexDevelopment\Networking\Request
+    * Fix __construct() not putting POST and GET data into correct properties.
+    * Allow the return of all the post and get data by not providing an argument to post() and get();
+    * Change all return 0; statements to return false;.
+    + Add function isPost() to test if post data has been submitted.
+    + Add function isGet() to test if get data has been submitted.
+
+src\ApexDevelopment\Networking\Routing
+    + Add call to $controller -> sendURI(); in executeRequest() method.
+
+src\ApexDevelopment\HTML\Helpers\FormHelper
+    * Modify option() to require an additional "$parentName" parameter as the first param.
+    * Modify all functions except password() to auto-input values if they are already submitted.
+    + Add function password() to generate a password field.
+    + Add function __construct() to load in the Request object.
+    + Add property $Request to hold the request object.
+
++ Add ApexDevelopment\Plugins\PluginManager
+    + Add function load($name) that finds the plugin and returns the object.
+
++ Add plugins folder to \app.
+    **All plugins must have namespacing of Plugins\<pluginName>**
+    **All plugins must have __construct($params)**
+    **All plugins must extend ApexDevelopment\Plugins\Plugin**
+
++ Add ApexDevelopment\HTML\Flash
+    + Add function setSuccess($msg) that adds a success message to an array.
+    + Add function setNotification($msg) that adds a notification message to an array.
+    + Add function setError($msg) that adds an error message to an array.
+    + Add function isError() to check if there is errors.
+    + Add function isNotification() to check if there is notifications.
+    + Add function isSuccess() to check if there are success messages.
+    + Add function success() to get all success messages.
+    + Add function error() to get all error messages.
+    + Add function notification() to get all notification messages.
+
+src\ApexDevelopment\Core\Model
+    * Modify loadModel() to return the object when it is all loaded.
+    * Modify loadModel() to return the object if it is already instantiated.
+    - Remove $cr = ClassRegistry::singleton() from __construct().
+
+src\ApexDevelopment\Core\App
+    * Terminate run() function at the end with return;.
+
+webroot\index.php
+    * Terminate whole application using exit().
+    * Close the PHP tag.
+
+src\ApexDevelopment\HTML\Helper
+    * Modify parseAttr() to test for the value attribute.
+    * Modify parseAttr() to test for the checked attribute.
+    * Modify parseAttr() to test for the selected attribute.
+
+src\ApexDevelopment\Core\Model\Base
+    * Modify all input functions to check if $this has any before<ColumnName> methods.
+    * Modify all get function to check if $this has any after<ColumnName> methods.
+
+src\ApexDevelopment\Database\DB
+    * Add security to ALL DATABASE FUNCTIONS.
+
+src\ApexDevelopment\Networking\Networking
+    + Add function getRealIP() to get the client's REAL IP address.
+    + Add function cookie($name, $val = null) to set or get cookies. ENCRYPT.
+    + Add function session($name, $val = null) to set or get sessions. ENCRYPT.
+    + Add function killActiveSessions() to kill all active Session vars.
+    + Add function killCookie($name) to kill a particular cookie.
+
+src\ApexDevelopment\PHP\ClassRegistry
+    + Update push function to return the object if it is already created.
